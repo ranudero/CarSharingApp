@@ -1,0 +1,24 @@
+### Project Specific ###
+
+### Lab specific ###
+
+Car Sharing/Companies
+Car Sharing/Initialization
+Car Sharing/Relationship
+Car Sharing/Welcome, customer
+
+
+/Topics
+course-info.yaml
+course-remote-info.yaml
+
+
+### IDEA ###
+.idea/
+*.iml
+
+
+### Gradle ###
+.gradle/
+*build
+*out
