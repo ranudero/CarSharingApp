@@ -12,10 +12,10 @@ public class DatabaseManager {
     // Database credentials
     static final String USER = "";
     static final String PASS = "";
+    static Connection conn = null;
+    static Statement stmt = null;
 
     public static void createDatabaseAndTable(String dbUrl) {
-        Connection conn = null;
-        Statement stmt = null;
 
         try {
             // Register JDBC driver
@@ -35,12 +35,34 @@ public class DatabaseManager {
             System.out.println("Created table in given database...");
 
             // Clean-up environment
-            stmt.close();
-            conn.close();
+           // stmt.close();
+            //conn.close();
         } catch (SQLException | ClassNotFoundException se) {
             // Handle errors for JDBC
             se.printStackTrace();
         }
     }
+
+    public static void closeConnection() {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    public static void closeStatement() {
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+
 }
 
