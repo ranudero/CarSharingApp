@@ -23,7 +23,6 @@ public class Main {
         String dbUrl = "jdbc:h2:./src/carsharing/db/" + dbName;
 
         DatabaseManager.createDatabaseAndTable(dbUrl);
-        DatabaseManager.closeStatement();
-        DatabaseManager.closeConnection();
+        DatabaseManager.closeDatabase();
     }
 }

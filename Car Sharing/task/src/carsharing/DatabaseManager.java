@@ -43,7 +43,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void closeConnection() {
+    private static void closeConnection() {
         try {
             if (stmt != null) {
                 stmt.close();
@@ -53,7 +53,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void closeStatement() {
+    private static void closeStatement() {
         try {
             if (conn != null) {
                 conn.close();
@@ -61,6 +61,11 @@ public class DatabaseManager {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+    }
+
+    public static void closeDatabase(){
+        closeStatement();
+        closeConnection();
     }
 
 
