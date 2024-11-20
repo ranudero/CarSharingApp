@@ -1,13 +1,17 @@
 package carsharing.menu;
 
+import carsharing.CompanyDAO;
+import carsharing.DBCompanyDAO;
 import carsharing.utility.KeyboardUtil;
 
 public class MainMenu implements Menu {
 
     private final ManagerMenu managerMenu;
+    private CompanyDAO companyDAO;
 
     public MainMenu() {
         managerMenu = new ManagerMenu();
+        companyDAO = new DBCompanyDAO();
     }
 
     @Override

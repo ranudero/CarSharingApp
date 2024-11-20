@@ -16,13 +16,13 @@ public class Main {
         MainMenu mainMenu = new MainMenu();
         mainMenu.run();
 
-        String dbName = "default";
-        if (args.length > 1 && args[0].equals("-databaseFileName")) {
-            dbName = args[1];
-        }
-        String dbUrl = "jdbc:h2:./src/carsharing/db/" + dbName;
-
-        DatabaseManager.createDatabaseAndTable(dbUrl);
-        DatabaseManager.closeDatabase();
+//        String dbName = "default";
+//        if (args.length > 1 && args[0].equals("-databaseFileName")) {
+//            dbName = args[1];
+//        }
+//        String dbUrl = "jdbc:h2:./src/carsharing/db/" + dbName;
+//
+//        DatabaseManager.createDatabaseAndTable(dbUrl);
+//        DatabaseManager.closeDatabase();
     }
 }
