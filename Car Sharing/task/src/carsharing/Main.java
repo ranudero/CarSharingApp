@@ -1,9 +1,6 @@
 package carsharing;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import carsharing.menu.MainMenu;
 
 public class Main {
     // write your code here
@@ -15,6 +12,9 @@ public class Main {
     static final String PASS = "";
 
     public static void main(String[] args) {
+
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.run();
 
         String dbName = "default";
         if (args.length > 1 && args[0].equals("-databaseFileName")) {
