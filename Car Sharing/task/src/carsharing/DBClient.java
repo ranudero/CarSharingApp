@@ -4,15 +4,10 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
-
-import org.h2.jdbcx.JdbcDataSource;
 
 
 public class DBClient {
     private final DataSource dataSource;
-//    private final String user;
-//    private final String pass;
 
     public DBClient(DataSource dataSource) {
         this.dataSource = dataSource;

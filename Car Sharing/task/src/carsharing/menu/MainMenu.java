@@ -1,6 +1,5 @@
 package carsharing.menu;
 
-import carsharing.CompanyDAO;
 import carsharing.DBCompanyDAO;
 import carsharing.utility.KeyboardUtil;
 
