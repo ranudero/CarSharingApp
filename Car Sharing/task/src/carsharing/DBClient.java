@@ -48,10 +48,28 @@ public class DBClient {
         return companies;
     }
 
-    public String getDataSourceUrl() {
-        if (dataSource instanceof JdbcDataSource) {
-            return ((JdbcDataSource) dataSource).getURL();
+    private void closeConnection() {
+        try {
+            if (dataSource != null) {
+                dataSource.getConnection().close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+    }
+
+    private void closeStatement() {
+        try {
+            if (dataSource != null) {
+                dataSource.getConnection().createStatement().close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeDatabase() {
+        closeStatement();
+        closeConnection();
     }
 }

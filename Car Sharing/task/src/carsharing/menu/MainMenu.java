@@ -7,11 +7,12 @@ import carsharing.utility.KeyboardUtil;
 public class MainMenu implements Menu {
 
     private final ManagerMenu managerMenu;
-    private CompanyDAO companyDAO;
+    private DBCompanyDAO companyDAO;
 
     public MainMenu() {
-        managerMenu = new ManagerMenu();
         companyDAO = new DBCompanyDAO();
+        managerMenu = new ManagerMenu(companyDAO);
+
     }
 
     @Override
@@ -30,6 +31,7 @@ public class MainMenu implements Menu {
                     managerMenu.run();
                     break;
                 case 0:
+                    companyDAO.closeDatabase();
                     exitApplication();
                     break;
                 default:

@@ -1,5 +1,7 @@
 package carsharing.menu;
 
+import carsharing.DBCompanyDAO;
+
 public interface Menu {
     void show();
     void run();

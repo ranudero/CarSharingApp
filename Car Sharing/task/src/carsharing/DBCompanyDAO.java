@@ -38,4 +38,8 @@ public class DBCompanyDAO implements CompanyDAO {
     public void add(Company company) {
        dbClient.run(INSERT_DATA.replace("?", "'" + company.getName() + "'"));
     }
+
+    public void closeDatabase() {
+        dbClient.closeDatabase();
+    }
 }
