@@ -1,4 +1,4 @@
-package carsharing.utility;
+package carsharing.utils;
 
 import java.util.Scanner;
 

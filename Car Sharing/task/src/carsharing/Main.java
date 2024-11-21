@@ -1,6 +1,6 @@
 package carsharing;
 
-import carsharing.menu.MainMenu;
+import carsharing.menus.MainMenu;
 
 public class Main {
 

@@ -1,8 +1,8 @@
-package carsharing.menu;
+package carsharing.menus;
 
-import carsharing.Company;
-import carsharing.DBCompanyDAO;
-import carsharing.utility.KeyboardUtil;
+import carsharing.models.Company;
+import carsharing.daos.DBCompanyDAO;
+import carsharing.utils.KeyboardUtil;
 
 public class ManagerMenu implements Menu {
     private final DBCompanyDAO companyDAO;

@@ -1,4 +1,6 @@
-package carsharing;
+package carsharing.utils;
+
+import carsharing.models.Company;
 
 import javax.sql.DataSource;
 import java.sql.*;

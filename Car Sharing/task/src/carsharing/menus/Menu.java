@@ -1,4 +1,4 @@
-package carsharing.menu;
+package carsharing.menus;
 
 public interface Menu {
     void show();

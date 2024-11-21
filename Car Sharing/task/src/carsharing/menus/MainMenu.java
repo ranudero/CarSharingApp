@@ -1,7 +1,7 @@
-package carsharing.menu;
+package carsharing.menus;
 
-import carsharing.DBCompanyDAO;
-import carsharing.utility.KeyboardUtil;
+import carsharing.daos.DBCompanyDAO;
+import carsharing.utils.KeyboardUtil;
 
 public class MainMenu implements Menu {
 
