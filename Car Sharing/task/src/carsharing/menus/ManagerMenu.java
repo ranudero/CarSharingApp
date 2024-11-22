@@ -4,12 +4,16 @@ import carsharing.models.Company;
 import carsharing.daos.DBCompanyDAO;
 import carsharing.utils.KeyboardUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ManagerMenu implements Menu {
     private final DBCompanyDAO companyDAO;
+    private CompanyMenu companyMenu;
 
-    public ManagerMenu(DBCompanyDAO companyDAO) {
+    public ManagerMenu(DBCompanyDAO companyDAO, CompanyMenu companyMenu) {
         this.companyDAO = companyDAO;
-
+        this.companyMenu = companyMenu;
     }
 
     @Override
@@ -20,13 +24,17 @@ public class ManagerMenu implements Menu {
     }
 
     @Override
+    public void show(List<Company> companies){
+    }
+
+    @Override
     public void run() {
         while (true) {
             show();
             int choice = KeyboardUtil.getInputInt();
             switch (choice) {
                 case 1:
-                    companyList();
+                    companyMenu.run(companyList());
                     break;
                 case 2:
                     createCompany();
@@ -45,14 +53,20 @@ public class ManagerMenu implements Menu {
         System.out.println("The company was created!");
     }
 
-    private void companyList() {
+    private List<Company> companyList() {
         if (companyDAO.findAll().isEmpty()) {
             System.out.println("The company list is empty!");
-            return;
+            return null;
         } else {
-            System.out.println("\nCompany list:");
-            companyDAO.findAll().forEach(company -> System.out.println(company.getId() + ". " + company.getName()));
+            List<Company> companies = new ArrayList<>();
+            companyDAO.findAll().forEach(company -> companies.add(company));
+            return companies;
         }
+    }
+
+    @Override
+    public void run(List<Company> companies){
+
     }
 }
 

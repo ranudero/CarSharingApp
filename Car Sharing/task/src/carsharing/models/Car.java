@@ -1,5 +1,6 @@
 package carsharing.models;
 
+
 public class Car {
     private int id;
     private String name;
@@ -8,7 +9,7 @@ public class Car {
     public Car(int id, String name, int companyId) {
         this.id = id;
         this.name = name;
-        this.companyId = companyId
+        this.companyId = companyId;
     }
 
     public int getId() {
