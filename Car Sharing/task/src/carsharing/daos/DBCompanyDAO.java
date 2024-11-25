@@ -33,7 +33,7 @@ public class DBCompanyDAO implements CompanyDAO {
 
     @Override
     public List<Company> findAll() {
-        return dbClient.selectForList(SELECT_ALL);
+        return dbClient.selectForList(SELECT_ALL, rs -> new Company(rs.getInt("ID"), rs.getString("NAME")));
     }
 
     @Override
@@ -43,5 +43,9 @@ public class DBCompanyDAO implements CompanyDAO {
 
     public void closeDatabase() {
         dbClient.closeDatabase();
+    }
+
+    public Company findById(int companyId) {
+        return dbClient.selectForCompany("SELECT * FROM COMPANY WHERE ID = " + companyId);
     }
 }

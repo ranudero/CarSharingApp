@@ -2,18 +2,20 @@ package carsharing.menus;
 
 import carsharing.models.Company;
 import carsharing.daos.DBCompanyDAO;
+import carsharing.services.CompanyService;
 import carsharing.utils.KeyboardUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerMenu implements Menu {
     private final DBCompanyDAO companyDAO;
     private CompanyMenu companyMenu;
+    private CompanyService companyService;
 
-    public ManagerMenu(DBCompanyDAO companyDAO, CompanyMenu companyMenu) {
+    public ManagerMenu(DBCompanyDAO companyDAO, CompanyMenu companyMenu, CompanyService companyService) {
         this.companyDAO = companyDAO;
         this.companyMenu = companyMenu;
+        this.companyService = companyService;
     }
 
     @Override
@@ -34,10 +36,10 @@ public class ManagerMenu implements Menu {
             int choice = KeyboardUtil.getInputInt();
             switch (choice) {
                 case 1:
-                    companyMenu.run(companyList());
+                    companyMenu.run(companyListMenu());
                     break;
                 case 2:
-                    createCompany();
+                    createCompanyMenu();
                     break;
                 case 0:
                    return;
@@ -47,21 +49,20 @@ public class ManagerMenu implements Menu {
         }
     }
 
-    private void createCompany() {
+    private void createCompanyMenu() {
         String name = KeyboardUtil.getInputString("Enter the company name:");
-        companyDAO.add(new Company(0, name));
-        System.out.println("The company was created!");
+        companyService.createCompany(name);
     }
 
-    private List<Company> companyList() {
-        if (companyDAO.findAll().isEmpty()) {
-            System.out.println("The company list is empty!");
-            return null;
-        } else {
-            List<Company> companies = new ArrayList<>();
-            companyDAO.findAll().forEach(company -> companies.add(company));
-            return companies;
-        }
+    private List<Company> companyListMenu() {
+       List<Company> companies = companyService.companyList();
+       if (companies.isEmpty()) {
+           System.out.println("The company list is empty!");
+           return null;
+         } else {
+
+           return companies;
+       }
     }
 
     @Override

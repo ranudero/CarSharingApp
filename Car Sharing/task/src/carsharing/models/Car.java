@@ -1,6 +1,8 @@
 package carsharing.models;
 
 
+import java.util.List;
+
 public class Car {
     private int id;
     private String name;
@@ -20,7 +22,8 @@ public class Car {
         return name;
     }
 
-    public int getCompanyId() {
+    public Integer getCompanyId() {
         return companyId;
     }
+
 }

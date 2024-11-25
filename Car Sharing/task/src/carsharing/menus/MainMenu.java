@@ -1,7 +1,10 @@
 package carsharing.menus;
 
+import carsharing.daos.DBCarDAO;
 import carsharing.daos.DBCompanyDAO;
 import carsharing.models.Company;
+import carsharing.services.CarService;
+import carsharing.services.CompanyService;
 import carsharing.utils.KeyboardUtil;
 
 import java.util.List;
@@ -10,12 +13,18 @@ public class MainMenu implements Menu {
 
     private final ManagerMenu managerMenu;
     private DBCompanyDAO companyDAO;
+    private DBCarDAO carDAO;
     private CompanyMenu companyMenu;
+    private CompanyService companyService;
+    private CarService carService;
 
     public MainMenu() {
         companyDAO = new DBCompanyDAO();
-        companyMenu = new CompanyMenu(companyDAO);
-        managerMenu = new ManagerMenu(companyDAO, companyMenu);
+        carDAO = new DBCarDAO();
+        companyService = new CompanyService(companyDAO);
+        carService = new CarService(carDAO);
+        companyMenu = new CompanyMenu(companyDAO, companyService, carService);
+        managerMenu = new ManagerMenu(companyDAO, companyMenu, companyService);
     }
 
     @Override

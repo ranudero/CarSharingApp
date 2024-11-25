@@ -1,5 +1,6 @@
 package carsharing.utils;
 
+import carsharing.models.Car;
 import carsharing.models.Company;
 
 import javax.sql.DataSource;
@@ -26,23 +27,18 @@ public class DBClient {
         }
     }
 
-    public List<Company> selectForList(String query) {
-        List<Company> companies = new ArrayList<>();
+    public <T> List<T> selectForList(String query, RowMapper<T> rowMapper) {
+        List<T> result = new ArrayList<>();
         try (Connection con = dataSource.getConnection();
              Statement statement = con.createStatement();
-             ResultSet resultSetItem = statement.executeQuery(query)
-        ) {
-            while (resultSetItem.next()) {
-                int id = resultSetItem.getInt("ID");
-                String name = resultSetItem.getString("NAME");
-                Company company = new Company(id, name);
-                companies.add(company);
+             ResultSet resultSet = statement.executeQuery(query)) {
+            while (resultSet.next()) {
+                result.add(rowMapper.mapRow(resultSet));
             }
-            return companies;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return companies;
+        return result;
     }
 
     private void closeConnection() {
@@ -68,5 +64,70 @@ public class DBClient {
     public void closeDatabase() {
         closeStatement();
         closeConnection();
+    }
+
+    public Company selectForCompany(String s) {
+        Company company = null;
+        try (Connection con = dataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet resultSetItem = statement.executeQuery(s)
+        ) {
+            while (resultSetItem.next()) {
+                int id = resultSetItem.getInt("ID");
+                String name = resultSetItem.getString("NAME");
+                company = new Company(id, name);
+            }
+            return company;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return company;
+    }
+
+    public Car selectForCar(String s) {
+        Car car = null;
+        try (Connection con = dataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet resultSetItem = statement.executeQuery(s)
+        ) {
+            while (resultSetItem.next()) {
+                int id = resultSetItem.getInt("ID");
+                String name = resultSetItem.getString("NAME");
+                int companyId = resultSetItem.getInt("COMPANY_ID");
+                car = new Car(id, name, companyId);
+            }
+            return car;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return car;
+    }
+
+    public List<Car> selectForCars(String replace) {
+        List<Car> cars = new ArrayList<>();
+        int id = 1;
+        try (Connection con = dataSource.getConnection();
+             Statement statement = con.createStatement();
+             ResultSet resultSet = statement.executeQuery(replace)) {
+            while (resultSet.next()) {
+                String name = resultSet.getString("NAME");
+                int companyId = resultSet.getInt("COMPANY_ID");
+                cars.add(new Car(id, name, companyId));
+                id += 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return cars;
+    }
+
+    public Connection getConnection() {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
