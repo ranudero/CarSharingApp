@@ -2,6 +2,7 @@ package carsharing.utils;
 
 import carsharing.models.Car;
 import carsharing.models.Company;
+import org.h2.jdbcx.JdbcDataSource;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,8 +12,15 @@ import java.util.List;
 
 public class DBClient {
     private final DataSource dataSource;
+    private static final String CONNECTION_URL = "jdbc:h2:file:./src/carsharing/db/carsharing";
+    private static final String USER = "";
+    private static final String PASS = "";
 
-    public DBClient(DataSource dataSource) {
+    public DBClient() {
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setUrl(CONNECTION_URL);
+        dataSource.setUser(USER);
+        dataSource.setPassword(PASS);
         this.dataSource = dataSource;
     }
 

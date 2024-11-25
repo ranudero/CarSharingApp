@@ -8,9 +8,6 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 public class DBCarDAO implements CarDAO{
-    private static final String CONNECTION_URL = "jdbc:h2:file:./src/carsharing/db/carsharing";
-    private static final String USER = "";
-    private static final String PASS = "";
     private static final String CREATE_DB = "CREATE TABLE IF NOT EXISTS CAR (" +
             "ID INT PRIMARY KEY AUTO_INCREMENT, " +
             "NAME VARCHAR(255) NOT NULL UNIQUE, " +
@@ -24,13 +21,7 @@ public class DBCarDAO implements CarDAO{
     private final DBClient dbClient;
 
     public DBCarDAO() {
-        JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setUrl(CONNECTION_URL);
-        dataSource.setUser(USER);
-        dataSource.setPassword(PASS);
-        System.out.println("Connection to SQLite has been established.");
-        System.out.println(dataSource.getUrl());
-        dbClient = new DBClient(dataSource);
+        dbClient = new DBClient();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
     }
