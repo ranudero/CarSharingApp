@@ -30,6 +30,7 @@ public class MainMenu implements Menu {
     @Override
     public void show() {
         System.out.println("1. Log in as a manager");
+        System.out.println("2. Log in as a customer");
         System.out.println("0. Exit");
     }
 
@@ -46,6 +47,9 @@ public class MainMenu implements Menu {
             switch (choice) {
                 case 1:
                     managerMenu.run();
+                    break;
+                case 2:
+                    //customerMenu.run();
                     break;
                 case 0:
                     companyDAO.closeDatabase();
