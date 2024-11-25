@@ -2,7 +2,6 @@ package carsharing.services;
 
 import carsharing.daos.DBCarDAO;
 import carsharing.models.Car;
-import carsharing.models.Company;
 
 import java.util.List;
 
@@ -24,7 +23,4 @@ public class CarService {
         System.out.println("The car was created!");
     }
 
-    public String getCarName(int carId) {
-        return carDAO.findById(carId).getName();
-    }
 }

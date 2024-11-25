@@ -41,11 +41,9 @@ public class CarMenu implements Menu {
             int choice = KeyboardUtil.getInputInt();
             switch (choice) {
                 case 1:
-                    // show car list for company with id = companyId
                     carListMenu();
                     break;
                 case 2:
-                    // create a car for company with id = companyId
                     createCarMenu();
                     break;
                 case 0:
