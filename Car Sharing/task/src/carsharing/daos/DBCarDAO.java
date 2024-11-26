@@ -2,7 +2,7 @@ package carsharing.daos;
 
 import carsharing.models.Car;
 import carsharing.utils.DBClient;
-import org.h2.jdbcx.JdbcDataSource;
+
 import java.sql.PreparedStatement;
 
 import java.util.List;
@@ -18,10 +18,10 @@ public class DBCarDAO implements CarDAO{
     private static final String SELECT_BY_ID = "SELECT * FROM CAR WHERE COMPANY_ID = ?";
     private static final String INSERT_DATA = "INSERT INTO CAR (NAME, COMPANY_ID) VALUES (?, ?)";
 
-    private final DBClient dbClient;
+    private static DBClient dbClient;
 
     public DBCarDAO() {
-        dbClient = new DBClient();
+        dbClient = DBClient.getInstance();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
     }

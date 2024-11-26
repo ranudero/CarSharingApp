@@ -17,11 +17,12 @@ public class DBCustomerDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM CUSTOMER WHERE RENTED_CAR_ID = ?";
     private static final String INSERT_DATA = "INSERT INTO CUSTOMER (NAME) VALUES (?)";
     private static final String SELECT_ALL = "SELECT * FROM CUSTOMER";
+    private static final String SELECT_CUSTOMER = "SELECT * FROM CUSTOMER WHERE ID = ?";
 
-    private final DBClient dbClient;
+    private static DBClient dbClient;
 
     public DBCustomerDAO() {
-        dbClient = new DBClient();
+        dbClient = DBClient.getInstance();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
     }
@@ -39,5 +40,6 @@ public class DBCustomerDAO {
     public List<Customer> findAll() {
         return dbClient.selectForList(SELECT_ALL, rs -> new Customer(rs.getInt("ID"), rs.getString("NAME"), rs.getInt("RENTED_CAR_ID")));
     }
+
 
 }

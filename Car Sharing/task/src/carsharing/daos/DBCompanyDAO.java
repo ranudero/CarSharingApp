@@ -14,10 +14,10 @@ public class DBCompanyDAO implements CompanyDAO {
     private static final String SELECT_ALL = "SELECT * FROM COMPANY";
     private static final String INSERT_DATA = "INSERT INTO COMPANY (NAME) VALUES (?)";
 
-    private final DBClient dbClient;
+    private static DBClient dbClient;
 
     public DBCompanyDAO() {
-        dbClient = new DBClient();
+        dbClient = DBClient.getInstance();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
     }

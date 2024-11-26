@@ -11,17 +11,20 @@ import java.util.List;
 
 
 public class DBClient {
-    private final DataSource dataSource;
+    private final JdbcDataSource dataSource;
+    private static DBClient instance;
     private static final String CONNECTION_URL = "jdbc:h2:file:./src/carsharing/db/carsharing";
-    private static final String USER = "";
-    private static final String PASS = "";
 
-    public DBClient() {
-        JdbcDataSource dataSource = new JdbcDataSource();
+    protected DBClient() {
+        this.dataSource = new JdbcDataSource();
         dataSource.setUrl(CONNECTION_URL);
-        dataSource.setUser(USER);
-        dataSource.setPassword(PASS);
-        this.dataSource = dataSource;
+    }
+
+    public static DBClient getInstance() {
+        if (instance == null) {
+            instance = new DBClient();
+        }
+        return instance;
     }
 
     public void run(String str) {
