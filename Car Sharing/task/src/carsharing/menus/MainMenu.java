@@ -4,6 +4,7 @@ import carsharing.daos.DBCarDAO;
 import carsharing.daos.DBCompanyDAO;
 import carsharing.daos.DBCustomerDAO;
 import carsharing.models.Company;
+import carsharing.models.Customer;
 import carsharing.services.CarService;
 import carsharing.services.CompanyService;
 import carsharing.services.CustomerService;
@@ -18,6 +19,7 @@ public class MainMenu implements Menu {
     private DBCarDAO carDAO;
     private DBCustomerDAO customerDao;
     private CompanyMenu companyMenu;
+    private CustomerMenu customerMenu;
     private CompanyService companyService;
     private CarService carService;
     private CustomerService customerService;
@@ -31,6 +33,7 @@ public class MainMenu implements Menu {
         customerService = new CustomerService(customerDao);
         companyMenu = new CompanyMenu(companyDAO, companyService, carService);
         managerMenu = new ManagerMenu(companyDAO, companyMenu, companyService);
+        customerMenu = new CustomerMenu(customerDao, customerService);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class MainMenu implements Menu {
     }
 
     @Override
-    public void show(List<Company> companies){
+    public <T> void show(List<T> items){
     }
 
 
@@ -56,7 +59,7 @@ public class MainMenu implements Menu {
                     managerMenu.run();
                     break;
                 case 2:
-                    showCustomerList();
+                    customerMenu.run(showCustomerList());
                     break;
                 case 3:
                     createCustomer();
@@ -76,12 +79,12 @@ public class MainMenu implements Menu {
         customerService.createCustomer(name);
     }
 
-    private void showCustomerList() {
-        customerService.customerList();
+    private List<Customer> showCustomerList() {
+        return customerService.customerList();
     }
 
     @Override
-    public void run(List<Company> companies){
+    public <T> void run(List<T> items){
 
     }
 }

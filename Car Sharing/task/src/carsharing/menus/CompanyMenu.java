@@ -30,14 +30,21 @@ public class CompanyMenu implements Menu {
     }
 
     @Override
-    public void show(List<Company> companies){
-        System.out.println("\nChoose a company:");
-        companies.forEach(company -> System.out.println(company.getId() + ". " + company.getName()));
-        System.out.println("0. Back");
+    public <T> void show(List<T> items){
+        if(items != null && !items.isEmpty() && items.get(0) instanceof Company) {
+            List<Company> companies = (List<Company>) items;
+
+            System.out.println("\nChoose a company:");
+            companies.forEach(company -> System.out.println(company.getId() + ". " + company.getName()));
+            System.out.println("0. Back");
+        } else {
+            System.out.println("The company list is empty!");
+        }
     }
 
     @Override
-    public void run(List<Company> companies) {
+    public <T> void run(List<T> items) {
+        List<Company> companies = (List<Company>) items;
         while (companies != null) {
             show(companies);
             int choice = KeyboardUtil.getInputInt();

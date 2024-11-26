@@ -30,7 +30,7 @@ public class CarMenu implements Menu {
     }
 
     @Override
-    public void show(List<Company> companies){
+    public <T> void show(List<T> items) {
     }
 
     @Override
@@ -71,6 +71,6 @@ public class CarMenu implements Menu {
     }
 
     @Override
-    public void run(List<Company> companies){
+    public <T> void run(List<T> items){
     }
 }
