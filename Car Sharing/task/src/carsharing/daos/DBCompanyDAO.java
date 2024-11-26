@@ -15,11 +15,19 @@ public class DBCompanyDAO implements CompanyDAO {
     private static final String INSERT_DATA = "INSERT INTO COMPANY (NAME) VALUES (?)";
 
     private static DBClient dbClient;
+    private static DBCompanyDAO instance;
 
-    public DBCompanyDAO() {
+    protected DBCompanyDAO() {
         dbClient = DBClient.getInstance();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
+    }
+
+    public static DBCompanyDAO getInstance() {
+        if (instance == null) {
+            instance = new DBCompanyDAO();
+        }
+        return instance;
     }
 
     @Override

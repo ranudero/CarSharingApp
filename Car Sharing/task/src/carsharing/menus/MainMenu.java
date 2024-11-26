@@ -25,7 +25,7 @@ public class MainMenu implements Menu {
     private CustomerService customerService;
 
     public MainMenu() {
-        companyDAO = new DBCompanyDAO();
+        companyDAO = DBCompanyDAO.getInstance();
         carDAO = new DBCarDAO();
         customerDao = new DBCustomerDAO();
         companyService = new CompanyService(companyDAO);
