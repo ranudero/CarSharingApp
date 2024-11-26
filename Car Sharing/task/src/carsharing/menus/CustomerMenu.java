@@ -46,16 +46,22 @@ public class CustomerMenu implements Menu {
         List<Customer> customers = (List<Customer>) items;
         while (customers != null) {
             show(customers);
-            int choice = KeyboardUtil.getInputInt();
-            if (choice == 0) {
+            int customer_selected = KeyboardUtil.getInputInt();
+            if (customer_selected == 0) {
                 return;
-            } else if (choice > 0 && choice <= customers.size()) {
-               //createRentMenu(choice);
-                System.out.println("Rent menu");
+            } else if (customer_selected > 0 && customer_selected <= customers.size()) {
+                createRentMenu(customer_selected);
                 break;
             } else {
                 System.out.println("Invalid choice");
             }
         }
     }
+
+    private void createRentMenu(int customerSelected) {
+        RentMenu rentMenu = new RentMenu(customerDao, customerService, customerSelected);
+        rentMenu.run();
+    }
+
+
 }

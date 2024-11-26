@@ -34,6 +34,7 @@ public class MainMenu implements Menu {
         companyMenu = new CompanyMenu(companyDAO, companyService, carService);
         managerMenu = new ManagerMenu(companyDAO, companyMenu, companyService);
         customerMenu = new CustomerMenu(customerDao, customerService);
+
     }
 
     @Override

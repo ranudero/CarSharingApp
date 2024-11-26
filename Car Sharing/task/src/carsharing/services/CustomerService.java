@@ -22,8 +22,6 @@ public class CustomerService {
         List<Customer> customers = customerDAO.findAll();
         if (customers.isEmpty()) {
             System.out.println("The customer list is empty!");
-        } else {
-            System.out.println("Customer list:");
         }
         return customers;
     }
