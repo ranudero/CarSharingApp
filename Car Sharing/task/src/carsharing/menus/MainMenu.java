@@ -26,14 +26,14 @@ public class MainMenu implements Menu {
 
     public MainMenu() {
         companyDAO = DBCompanyDAO.getInstance();
-        carDAO = new DBCarDAO();
-        customerDao = new DBCustomerDAO();
-        companyService = new CompanyService(companyDAO);
-        carService = new CarService(carDAO);
-        customerService = new CustomerService(customerDao);
-        companyMenu = new CompanyMenu(companyDAO, companyService, carService);
-        managerMenu = new ManagerMenu(companyDAO, companyMenu, companyService);
-        customerMenu = new CustomerMenu(customerDao, customerService);
+        carDAO = DBCarDAO.getInstance();
+        customerDao = DBCustomerDAO.getInstance();
+        companyService = CompanyService.getInstance();
+        carService = CarService.getInstance();
+        customerService = CustomerService.getInstance();
+        companyMenu = new CompanyMenu();
+        managerMenu = new ManagerMenu(companyMenu);
+        customerMenu = new CustomerMenu();
 
     }
 

@@ -12,10 +12,10 @@ public class ManagerMenu implements Menu {
     private CompanyMenu companyMenu;
     private CompanyService companyService;
 
-    public ManagerMenu(DBCompanyDAO companyDAO, CompanyMenu companyMenu, CompanyService companyService) {
-        this.companyDAO = companyDAO;
+    public ManagerMenu(CompanyMenu companyMenu) {
+        companyDAO = DBCompanyDAO.getInstance();
         this.companyMenu = companyMenu;
-        this.companyService = companyService;
+        companyService = CompanyService.getInstance();
     }
 
     @Override

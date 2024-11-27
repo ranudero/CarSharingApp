@@ -19,11 +19,19 @@ public class DBCarDAO implements CarDAO{
     private static final String INSERT_DATA = "INSERT INTO CAR (NAME, COMPANY_ID) VALUES (?, ?)";
 
     private static DBClient dbClient;
+    private static DBCarDAO instance;
 
-    public DBCarDAO() {
+    protected DBCarDAO() {
         dbClient = DBClient.getInstance();
         dbClient.run(CREATE_DB);
         System.out.println("Table created");
+    }
+
+    public static DBCarDAO getInstance() {
+        if (instance == null) {
+            instance = new DBCarDAO();
+        }
+        return instance;
     }
 
     @Override

@@ -7,9 +7,17 @@ import java.util.List;
 
 public class CarService {
     private final DBCarDAO carDAO;
+    private static CarService instance;
 
-    public CarService(DBCarDAO carDAO) {
-        this.carDAO = carDAO;
+   protected CarService() {
+       carDAO = DBCarDAO.getInstance();
+    }
+
+    public static CarService getInstance(){
+        if (instance == null) {
+            instance = new CarService();
+        }
+        return instance;
     }
 
     public List<Car> carList(Integer companyId) {

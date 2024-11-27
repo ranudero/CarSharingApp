@@ -7,9 +7,17 @@ import java.util.List;
 
 public class CompanyService {
     private final DBCompanyDAO companyDAO;
+    private static CompanyService instance;
 
-    public CompanyService(DBCompanyDAO companyDAO) {
-        this.companyDAO = companyDAO;
+    protected CompanyService() {
+        companyDAO = DBCompanyDAO.getInstance();
+    }
+
+    public static CompanyService getInstance(){
+        if (instance == null) {
+            instance = new CompanyService();
+        }
+        return instance;
     }
 
     public List<Company> companyList() {

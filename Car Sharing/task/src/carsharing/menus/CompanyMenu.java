@@ -13,10 +13,10 @@ public class CompanyMenu implements Menu {
     private final CompanyService companyService;
     private final CarService carService;
 
-    public CompanyMenu(DBCompanyDAO companyDAO, CompanyService companyService, CarService carService) {
-        this.companyDAO = companyDAO;
-        this.companyService = companyService;
-        this.carService = carService;
+    public CompanyMenu() {
+        companyDAO = DBCompanyDAO.getInstance();
+        companyService = CompanyService.getInstance();
+        carService = CarService.getInstance();
     }
 
     @Override
