@@ -25,10 +25,27 @@ public class CarService {
 
     }
 
+    public List<Car> availableCarList(Integer companyId){
+        return carDAO.findAvailableCars(companyId);
+    }
+
+    public void listAvailableCars(Integer companyId) {
+        List<Car> cars = availableCarList(companyId);
+        if (cars.isEmpty()) {
+            System.out.println("No available cars");
+        } else {
+            cars.forEach(car -> System.out.println(car.getId() + ". " + car.getName()));
+        }
+    }
+
     public void createCar(Integer companyId, String name) {
         Car car = new Car(0, name, companyId);
         carDAO.add(car);
         System.out.println("The car was created!");
+    }
+
+    public Car findCarByName(String name, Integer companyId) {
+        return carDAO.findByName(name, companyId);
     }
 
 }

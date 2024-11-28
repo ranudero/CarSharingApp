@@ -9,14 +9,22 @@ import carsharing.utils.KeyboardUtil;
 import java.util.List;
 
 public class CompanyMenu implements Menu {
-    private final DBCompanyDAO companyDAO;
-    private final CompanyService companyService;
-    private final CarService carService;
+    //private final DBCompanyDAO companyDAO;
+    //private final CompanyService companyService;
+    //private final CarService carService;
+    private static CompanyMenu instance;
 
-    public CompanyMenu() {
-        companyDAO = DBCompanyDAO.getInstance();
-        companyService = CompanyService.getInstance();
-        carService = CarService.getInstance();
+    protected CompanyMenu() {
+        //companyDAO = DBCompanyDAO.getInstance();
+        //companyService = CompanyService.getInstance();
+        //carService = CarService.getInstance();
+    }
+
+    public static CompanyMenu getInstance() {
+        if (instance == null) {
+            instance = new CompanyMenu();
+        }
+        return instance;
     }
 
     @Override
@@ -37,8 +45,6 @@ public class CompanyMenu implements Menu {
             System.out.println("\nChoose a company:");
             companies.forEach(company -> System.out.println(company.getId() + ". " + company.getName()));
             System.out.println("0. Back");
-        } else {
-            System.out.println("The company list is empty!");
         }
     }
 
@@ -59,8 +65,8 @@ public class CompanyMenu implements Menu {
         }
     }
 
-    private void createCarMenu(int choice) {
-        CarMenu carMenu = new CarMenu(companyDAO, choice, companyService, carService);
+    public void createCarMenu(int choice) {
+        CarMenu carMenu = new CarMenu(choice);
         carMenu.run();
     }
 }

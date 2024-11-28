@@ -10,17 +10,19 @@ import carsharing.utils.KeyboardUtil;
 import java.util.List;
 
 public class CarMenu implements Menu {
-    private final DBCompanyDAO companyDAO;
+    //private final DBCompanyDAO companyDAO;
     private final int companyId;
     private final CompanyService companyService;
     private final CarService carService;
 
-    public CarMenu(DBCompanyDAO companyDAO, int companyId, CompanyService companyService, CarService carService) {
-        this.companyDAO = companyDAO;
+
+    public CarMenu(int companyId) {
+        //companyDAO = DBCompanyDAO.getInstance();
         this.companyId = companyId;
-        this.companyService = companyService;
-        this.carService = carService;
+        companyService = CompanyService.getInstance();
+        carService = CarService.getInstance();
     }
+
 
     @Override
     public void show() {
@@ -55,7 +57,7 @@ public class CarMenu implements Menu {
         }
     }
 
-    private void carListMenu() {
+    public void carListMenu() {
         List<Car> cars = carService.carList(companyId);
         if (cars.isEmpty()) {
             System.out.println("\nThe car list is empty!\n");

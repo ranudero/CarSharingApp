@@ -5,6 +5,9 @@ import carsharing.utils.DBClient;
 
 import java.sql.PreparedStatement;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DBCarDAO implements CarDAO{
@@ -17,6 +20,8 @@ public class DBCarDAO implements CarDAO{
     private static final String SELECT_ALL = "SELECT * FROM CAR";
     private static final String SELECT_BY_ID = "SELECT * FROM CAR WHERE COMPANY_ID = ?";
     private static final String INSERT_DATA = "INSERT INTO CAR (NAME, COMPANY_ID) VALUES (?, ?)";
+    private static final String AVAILABLE_CARS = "SELECT * FROM CAR WHERE COMPANY_ID = %d AND ID NOT IN (SELECT RENTED_CAR_ID FROM CUSTOMER WHERE RENTED_CAR_ID IS NOT NULL)";
+    private static final String SELECT_BY_NAME = "SELECT * FROM CAR WHERE NAME = ? AND COMPANY_ID = ?";
 
     private static DBClient dbClient;
     private static DBCarDAO instance;
@@ -57,4 +62,39 @@ public class DBCarDAO implements CarDAO{
     public Car findById(int carId) {
         return dbClient.selectForCar("SELECT * FROM CAR WHERE ID = " + carId);
     }
+
+    public List<Car> findAvailableCars(Integer companyId) {
+        ResultSet set = dbClient.query(AVAILABLE_CARS.formatted(companyId));
+        List<Car> availableCars = new ArrayList<>();
+        int id = 1;
+        try{
+            while(set.next()){
+                Car car = new Car(id,
+                        set.getString("NAME"),
+                        set.getInt("COMPANY_ID")
+                );
+                availableCars.add(car);
+                id++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return availableCars;
+
+    }
+
+    public Car findByName(String name, int companyId) {
+        try (PreparedStatement preparedStatement = dbClient.getConnection().prepareStatement(SELECT_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, companyId);
+            ResultSet set = preparedStatement.executeQuery();
+            if (set.next()) {
+                return new Car(set.getInt("ID"), set.getString("NAME"), set.getInt("COMPANY_ID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -8,12 +8,10 @@ import carsharing.utils.KeyboardUtil;
 import java.util.List;
 
 public class ManagerMenu implements Menu {
-    private final DBCompanyDAO companyDAO;
     private CompanyMenu companyMenu;
     private CompanyService companyService;
 
     public ManagerMenu(CompanyMenu companyMenu) {
-        companyDAO = DBCompanyDAO.getInstance();
         this.companyMenu = companyMenu;
         companyService = CompanyService.getInstance();
     }

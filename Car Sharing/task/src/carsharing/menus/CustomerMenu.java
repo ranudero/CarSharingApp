@@ -10,12 +10,12 @@ import java.util.List;
 
 public class CustomerMenu implements Menu {
 
-    private final DBCustomerDAO customerDao;
-    private final CustomerService customerService;
+    //private final DBCustomerDAO customerDao;
+    //private final CustomerService customerService;
 
     public CustomerMenu() {
-        customerDao = DBCustomerDAO.getInstance();
-        customerService = CustomerService.getInstance();
+        //customerDao = DBCustomerDAO.getInstance();
+        //customerService = CustomerService.getInstance();
     }
 
     @Override
@@ -36,8 +36,6 @@ public class CustomerMenu implements Menu {
             System.out.println("\nChoose a customer:");
             customers.forEach(customer -> System.out.println(customer.getId() + ". " + customer.getName()));
             System.out.println("0. Back");
-        } else {
-            System.out.println("The customer list is empty!");
         }
     }
 
@@ -59,7 +57,7 @@ public class CustomerMenu implements Menu {
     }
 
     private void createRentMenu(int customerSelected) {
-        RentMenu rentMenu = new RentMenu(customerDao, customerService, customerSelected);
+        RentMenu rentMenu = new RentMenu(customerSelected);
         rentMenu.run();
     }
 

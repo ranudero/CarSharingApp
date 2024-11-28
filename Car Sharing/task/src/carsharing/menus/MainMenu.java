@@ -3,10 +3,7 @@ package carsharing.menus;
 import carsharing.daos.DBCarDAO;
 import carsharing.daos.DBCompanyDAO;
 import carsharing.daos.DBCustomerDAO;
-import carsharing.models.Company;
 import carsharing.models.Customer;
-import carsharing.services.CarService;
-import carsharing.services.CompanyService;
 import carsharing.services.CustomerService;
 import carsharing.utils.KeyboardUtil;
 
@@ -16,20 +13,16 @@ public class MainMenu implements Menu {
 
     private final ManagerMenu managerMenu;
     private DBCompanyDAO companyDAO;
-    private DBCarDAO carDAO;
-    private DBCustomerDAO customerDao;
     private CompanyMenu companyMenu;
     private CustomerMenu customerMenu;
-    private CompanyService companyService;
-    private CarService carService;
     private CustomerService customerService;
+    private DBCarDAO carDao;
+    private DBCustomerDAO customerDao;
 
     public MainMenu() {
         companyDAO = DBCompanyDAO.getInstance();
-        carDAO = DBCarDAO.getInstance();
+        carDao = DBCarDAO.getInstance();
         customerDao = DBCustomerDAO.getInstance();
-        companyService = CompanyService.getInstance();
-        carService = CarService.getInstance();
         customerService = CustomerService.getInstance();
         companyMenu = new CompanyMenu();
         managerMenu = new ManagerMenu(companyMenu);
@@ -60,7 +53,10 @@ public class MainMenu implements Menu {
                     managerMenu.run();
                     break;
                 case 2:
-                    customerMenu.run(showCustomerList());
+                    List<Customer> customers = showCustomerList();
+                    if (!customers.isEmpty()){
+                        customerMenu.run(customers);
+                    }
                     break;
                 case 3:
                     createCustomer();

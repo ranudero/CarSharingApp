@@ -2,48 +2,64 @@ package carsharing.utils;
 
 import carsharing.models.Car;
 import carsharing.models.Company;
-import org.h2.jdbcx.JdbcDataSource;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class DBClient {
-    private final JdbcDataSource dataSource;
+    private final Connection con    ;
     private static DBClient instance;
     private static final String CONNECTION_URL = "jdbc:h2:file:./src/carsharing/db/carsharing";
 
-    protected DBClient() {
-        this.dataSource = new JdbcDataSource();
-        dataSource.setUrl(CONNECTION_URL);
+    protected DBClient() throws SQLException {
+
+        con = DriverManager.getConnection(CONNECTION_URL);
     }
 
     public static DBClient getInstance() {
-        if (instance == null) {
-            instance = new DBClient();
+        try {
+            if (instance == null) {
+                instance = new DBClient();
+            }
+            return instance;
+        } catch (SQLException e){
+            throw new RuntimeException(e);
         }
-        return instance;
     }
 
     public void run(String str) {
-        try(Connection con = dataSource.getConnection();
-
-            Statement statement = con.createStatement()
-        ){
-            statement.executeUpdate(str);
+        try {
+            con.prepareStatement(str).execute();
         } catch (SQLException e) {;
             e.printStackTrace();
         }
     }
 
+    public void state(String sql) {
+        try {
+            con.prepareStatement(sql).execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet query(String sql) {
+        try {
+            return con.prepareStatement(sql).executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public <T> List<T> selectForList(String query, RowMapper<T> rowMapper) {
         List<T> result = new ArrayList<>();
-        try (Connection con = dataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
+        try {
+             ResultSet resultSet = con.createStatement().executeQuery(query);
+             while (resultSet.next()) {
                 result.add(rowMapper.mapRow(resultSet));
             }
         } catch (SQLException e) {
@@ -54,8 +70,8 @@ public class DBClient {
 
     private void closeConnection() {
         try {
-            if (dataSource != null) {
-                dataSource.getConnection().close();
+            if (con != null) {
+                con.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,8 +80,8 @@ public class DBClient {
 
     private void closeStatement() {
         try {
-            if (dataSource != null) {
-                dataSource.getConnection().createStatement().close();
+            if (con != null) {
+                con.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,16 +89,12 @@ public class DBClient {
     }
 
     public void closeDatabase() {
-        closeStatement();
         closeConnection();
     }
 
     public Company selectForCompany(String s) {
         Company company = null;
-        try (Connection con = dataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet resultSetItem = statement.executeQuery(s)
-        ) {
+        try{ ResultSet resultSetItem = con.createStatement().executeQuery(s);
             while (resultSetItem.next()) {
                 int id = resultSetItem.getInt("ID");
                 String name = resultSetItem.getString("NAME");
@@ -97,10 +109,7 @@ public class DBClient {
 
     public Car selectForCar(String s) {
         Car car = null;
-        try (Connection con = dataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet resultSetItem = statement.executeQuery(s)
-        ) {
+        try { ResultSet resultSetItem = con.createStatement().executeQuery(s);
             while (resultSetItem.next()) {
                 int id = resultSetItem.getInt("ID");
                 String name = resultSetItem.getString("NAME");
@@ -117,9 +126,8 @@ public class DBClient {
     public List<Car> selectForCars(String replace) {
         List<Car> cars = new ArrayList<>();
         int id = 1;
-        try (Connection con = dataSource.getConnection();
-             Statement statement = con.createStatement();
-             ResultSet resultSet = statement.executeQuery(replace)) {
+        try{
+            ResultSet resultSet = con.createStatement().executeQuery(replace);
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
                 int companyId = resultSet.getInt("COMPANY_ID");
@@ -135,8 +143,8 @@ public class DBClient {
 
     public Connection getConnection() {
         try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
+            return con;
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
         return null;

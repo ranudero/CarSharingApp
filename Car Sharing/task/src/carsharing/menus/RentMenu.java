@@ -10,9 +10,9 @@ public class RentMenu implements Menu {
     private final CustomerService customerService;
     private final int customerId;
 
-    public RentMenu(DBCustomerDAO customerDao, CustomerService customerService, int customerId) {
-        this.customerDao = customerDao;
-        this.customerService = customerService;
+    public RentMenu(int customerId) {
+        customerDao = DBCustomerDAO.getInstance();
+        customerService = CustomerService.getInstance();
         this.customerId = customerId;
     }
 
@@ -31,24 +31,29 @@ public class RentMenu implements Menu {
 
     @Override
     public void run() {
-        show();
-        int choice = KeyboardUtil.getInputInt();
-        switch (choice) {
-            case 1:
-                System.out.println("Rent a car");
-                rentACarMenu();
-                break;
-            case 2:
-                System.out.println("Return a rented car");
-                break;
-            case 3:
-                System.out.println("My rented car");
-                break;
-            case 0:
-                return;
-            default:
-                System.out.println("Invalid choice");
+        while(true) {
+            show();
+            int choice = KeyboardUtil.getInputInt();
+            switch (choice) {
+                case 1:
+                    rentACarMenu();
+                    break;
+                case 2:
+                    returnRentedCarMenu();
+                    break;
+                case 3:
+                    myRentedCarMenu();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+            }
         }
+    }
+
+    private void returnRentedCarMenu() {
+        customerService.returnRentedCar(customerId);
     }
 
     private void rentACarMenu() {
@@ -58,9 +63,14 @@ public class RentMenu implements Menu {
         //if user picks a company, list out all the cars available cars of that company
         //if no cars are available, print "No available cars"
         //if user picks a car, rent the car to the customer
+        customerService.rentACar(customerId);
 
+    }
 
-
+    private void myRentedCarMenu() {
+        //if customer has rented a car, print the car name
+        //if customer has not rented a car, print "You didn't rent a car!"
+        customerService.getCustomerCar(customerId);
     }
 
     @Override

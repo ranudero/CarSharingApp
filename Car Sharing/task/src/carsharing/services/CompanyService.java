@@ -1,6 +1,7 @@
 package carsharing.services;
 
 import carsharing.daos.DBCompanyDAO;
+import carsharing.models.Car;
 import carsharing.models.Company;
 
 import java.util.List;
@@ -21,8 +22,11 @@ public class CompanyService {
     }
 
     public List<Company> companyList() {
-        return companyDAO.findAll();
-
+        List<Company> companies = companyDAO.findAll();
+        if (companies.isEmpty()) {
+            System.out.println("The company list is empty!");
+        }
+        return companies;
     }
 
     public void createCompany(String name) {
@@ -34,4 +38,7 @@ public class CompanyService {
     public String getCompanyName(int companyId) {
         return companyDAO.findById(companyId).getName();
     }
+
+
+
 }
