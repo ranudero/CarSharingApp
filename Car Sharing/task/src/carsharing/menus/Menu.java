@@ -1,6 +1,5 @@
 package carsharing.menus;
 
-import carsharing.models.Company;
 
 import java.util.List;
 

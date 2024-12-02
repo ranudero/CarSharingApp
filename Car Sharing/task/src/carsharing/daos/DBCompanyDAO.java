@@ -2,7 +2,6 @@ package carsharing.daos;
 
 import carsharing.models.Company;
 import carsharing.utils.DBClient;
-import org.h2.jdbcx.JdbcDataSource;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 
-public class DBCustomerDAO {
+public class DBCustomerDAO implements CustomerDAO {
     private static final String CREATE_DB = "CREATE TABLE IF NOT EXISTS CUSTOMER (" +
             "ID INT PRIMARY KEY AUTO_INCREMENT, " +
             "NAME VARCHAR(255) NOT NULL UNIQUE, " +

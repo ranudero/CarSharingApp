@@ -2,7 +2,6 @@ package carsharing.services;
 
 import carsharing.daos.DBCarDAO;
 import carsharing.daos.DBCustomerDAO;
-import carsharing.menus.CarMenu;
 import carsharing.menus.CompanyMenu;
 import carsharing.models.Car;
 import carsharing.models.Company;
@@ -61,25 +60,6 @@ public class CustomerService {
             System.out.println(companyService.getCompanyName(car.getCompanyId()));
         }
     }
-
-
-//    public void rentACar(int customerId) {
-//        if (customerDAO.findRentedCar(customerId) != 0) {
-//            System.out.println("You've already rented a car!");
-//        } else {
-//            companyMenu.show(companyService.companyList());
-//            int companyID = KeyboardUtil.getInputInt();
-//            //show cars of the company
-//            carService.listAvailableCars(companyID);
-//            //select car
-//            int carNumber = KeyboardUtil.getInputInt();
-//            Car car = carService.availableCarList(companyID).get(carNumber - 1);
-//            String carName = car.getName();
-//            System.out.println("You rented " + "'" + carName + "'");
-//            car = carService.findCarByName(carName, companyID);
-//            customerDAO.updateRentedCar(customerId, car.getId());
-//        }
-//    }
 
     public void rentACar(int customerId) {
         if (customerDAO.findRentedCar(customerId) != 0) {

@@ -1,7 +1,6 @@
 package carsharing.services;
 
 import carsharing.daos.DBCompanyDAO;
-import carsharing.models.Car;
 import carsharing.models.Company;
 
 import java.util.List;

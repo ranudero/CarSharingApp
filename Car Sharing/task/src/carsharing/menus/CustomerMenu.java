@@ -1,21 +1,13 @@
 package carsharing.menus;
 
-import carsharing.daos.DBCustomerDAO;
-import carsharing.models.Company;
 import carsharing.models.Customer;
-import carsharing.services.CustomerService;
 import carsharing.utils.KeyboardUtil;
 
 import java.util.List;
 
 public class CustomerMenu implements Menu {
 
-    //private final DBCustomerDAO customerDao;
-    //private final CustomerService customerService;
-
     public CustomerMenu() {
-        //customerDao = DBCustomerDAO.getInstance();
-        //customerService = CustomerService.getInstance();
     }
 
     @Override

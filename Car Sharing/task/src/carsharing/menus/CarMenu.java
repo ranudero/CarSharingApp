@@ -1,8 +1,6 @@
 package carsharing.menus;
 
-import carsharing.daos.DBCompanyDAO;
 import carsharing.models.Car;
-import carsharing.models.Company;
 import carsharing.services.CarService;
 import carsharing.services.CompanyService;
 import carsharing.utils.KeyboardUtil;
@@ -10,14 +8,12 @@ import carsharing.utils.KeyboardUtil;
 import java.util.List;
 
 public class CarMenu implements Menu {
-    //private final DBCompanyDAO companyDAO;
     private final int companyId;
     private final CompanyService companyService;
     private final CarService carService;
 
 
     public CarMenu(int companyId) {
-        //companyDAO = DBCompanyDAO.getInstance();
         this.companyId = companyId;
         companyService = CompanyService.getInstance();
         carService = CarService.getInstance();
